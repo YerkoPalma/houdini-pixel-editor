@@ -1,0 +1,47 @@
+<!doctype html>
+<div id="grid">
+</div>
+
+<style>
+  body {
+    margin: 0;
+  }
+  #grid {
+    --width: 680;
+    --height: 420;
+    --rows: 10;
+    --columns: 10;
+    --grid: 0;
+    height: 420px;
+    width: 680px;
+    margin: 0 auto;
+    background: paint(grid);
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  if (location.protocol === 'http:' && location.hostname !== 'localhost')
+    location.protocol = 'https:';
+  if ('paintWorklet' in CSS) {
+    CSS.paintWorklet.addModule('gridworklet.js');
+  } else {
+    document.body.innerHTML = 'You need support for <a href="https://drafts.css-houdini.org/css-paint-api/">CSS Paint API</a> to view this demo :(';
+  }
+  // register the whole grid
+  document.addEventListener('DOMContentLoaded', function () {
+    var grid = document.querySelector('#grid')
+    var rows = getComputedStyle(grid).getPropertyValue('--rows')
+    var columns = getComputedStyle(grid).getPropertyValue('--columns')
+    var { top, left, width, height } = grid.getBoundingClientRect()
+    var size = [width / columns, height / rows]
+    grid.style.setProperty('--grid', '0 '.repeat(columns * rows))
+    grid.addEventListener('click', function (e) {
+      var x = Math.floor((e.pageX - left) / size[0])
+      var y = Math.floor((top + e.pageY) / size[1])
+      var girdValues = getComputedStyle(grid).getPropertyValue('--grid').toString().split(' ')
+      girdValues[y * columns + x] = girdValues[y * columns + x] === '0' ? '1' : '0'
+      grid.style.setProperty('--grid', girdValues.join(' '))
+    })
+  })
+</script>
