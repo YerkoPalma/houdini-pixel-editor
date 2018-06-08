@@ -3,8 +3,6 @@ registerPaint('grid', class {
     return [
       '--rows',
       '--columns',
-      '--height',
-      '--width',
       '--grid'
     ]
   }
@@ -58,8 +56,7 @@ registerPaint('grid', class {
     }
   }
   paint (ctx, geom, properties) {
-    var height = properties.get('--height').toString()
-    var width = properties.get('--width').toString()
+    var { height, width } = geom
     var rows = properties.get('--rows').toString()
     var columns = properties.get('--columns').toString()
     // draw pixels

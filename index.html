@@ -7,8 +7,6 @@
     margin: 0;
   }
   #grid {
-    --width: 680;
-    --height: 420;
     --rows: 10;
     --columns: 10;
     --grid: 0;
@@ -22,9 +20,9 @@
 
 <script>
   if (location.protocol === 'http:' && location.hostname !== 'localhost')
-    location.protocol = 'https:';
+    location.protocol = 'https:'
   if ('paintWorklet' in CSS) {
-    CSS.paintWorklet.addModule('gridworklet.js');
+    CSS.paintWorklet.addModule('gridworklet.js')
   } else {
     document.body.innerHTML = 'You need support for <a href="https://drafts.css-houdini.org/css-paint-api/">CSS Paint API</a> to view this demo :(';
   }
